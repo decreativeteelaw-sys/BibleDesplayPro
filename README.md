@@ -1,93 +1,45 @@
-# **Bible Display Pro**
+# Bible Display Pro — OBS Development Workspace
 
-An offline-first KJV Bible presentation tool designed for use with OBS Studio. It allows you to search, preview, style, and display Bible passages during live presentations.
+This repository currently contains two related but separate components:
 
-## **Important: GitHub Pages vs. Local Hosting**
+1. **OBS Studio plugin template** — the native C/C++ plugin starter project in the repository.
+2. **Bible Display Pro application package** — `Bible_Display_Pro_Quick_Go_Live_Fix.zip`, a Python/HTML/CSS/JavaScript application that presents KJV scripture through an OBS Browser Source.
 
-Bible Display Pro uses a local Python server to communicate between the controller and the OBS display.
+## Important architecture note
 
-**GitHub Pages cannot run this application by itself.** GitHub Pages is designed for static websites. It cannot run the Python server or the local WebSocket communication required by Bible Display Pro.
+The OBS plugin template is a starter framework, not a ready-made integration. The Bible Display Pro ZIP is currently a separate browser-based application. They have **not yet been merged into a working native OBS plugin**.
 
-GitHub is still useful for:
+The existing Bible Display Pro application does not need a native plugin to work: it runs a local Python server, opens its controller in a browser, and supplies a transparent output page to OBS as a Browser Source.
 
-- Storing and managing the project's source code.
-- Keeping backups and tracking changes.
-- Sharing the project with others.
-- Distributing downloadable releases.
+For that reason, the safest current approach is to preserve the native plugin template unchanged while keeping the existing Bible Display Pro package intact. A native plugin should only be added later if a specific OBS-native feature is needed.
 
-The application should run locally on the Windows computer connected to OBS Studio.
+## Current contents
 
-## **Requirements**
+- Native OBS plugin-template source and build configuration in the repository root.
+- `Bible_Display_Pro_Quick_Go_Live_Fix.zip` — the existing Bible Display Pro application package.
+- This README — explains how the two components relate and prevents the template from being mistaken for a completed integration.
 
-- Windows computer
-- Python installed
-- OBS Studio
-- Internet connection for the initial download of the KJV database and fonts
+## Running the existing Bible Display Pro application
 
-After the required database and fonts have been downloaded, the application is designed to work offline.
+1. Download and extract `Bible_Display_Pro_Quick_Go_Live_Fix.zip`.
+2. Open the extracted application folder on a Windows computer.
+3. Run `start.bat` and allow first-time setup to finish.
+4. Open the controller at `http://127.0.0.1:8765/index.html`.
+5. In OBS, add a Browser Source using `http://127.0.0.1:8765/output.html`.
+6. Keep the local server running while presenting.
 
-## **Quick Start**
+The application uses a local Python server. GitHub Pages cannot run that server, so GitHub Pages alone cannot host the live controller/output workflow.
 
-1. Download or extract the project folder.
-2. Open the extracted folder.
-3. Run `start.bat`.
-4. Allow the setup process to complete.
-5. Open the controller using the provided launcher.
+## Before building a native plugin
 
-The local application addresses are:
+A future integration should be treated as a separate development task:
 
-**Controller:**\
-`http://127.0.0.1:8765/index.html`
+- Define the exact native OBS feature required.
+- Review the template's build instructions and license.
+- Implement the plugin in the template's expected C/C++ structure.
+- Keep the existing browser-based Bible Display Pro working as a fallback.
+- Build and test on the target Windows/OBS setup before calling it complete.
 
-**OBS Browser Source:**\
-`http://127.0.0.1:8765/output.html`
+## Verification status
 
-Keep the local server running while using the application.
-
-## **Features**
-
-- KJV Bible search.
-- Search by book, chapter, verse, or keyword.
-- Previous and next verse navigation.
-- Display individual verses or verse ranges.
-- Preview passages before displaying them.
-- GO LIVE control positioned beside the passage search area.
-- Transparent Bible output for OBS.
-- Customizable text appearance and positioning.
-- Saved presentation styles and presets.
-- Local Bible database storage.
-
-## **First-Time Setup**
-
-The ZIP package contains setup scripts but does not include the complete KJV database or downloaded font files.
-
-The setup scripts are provided to obtain the required resources during the initial setup.
-
-If the Bible database is missing or damaged, run:
-
-`Repair_KJV_Database.bat`
-
-## **Project Structure**
-
-- `index.html` — Main controller interface.
-- `output.html` — OBS display page.
-- `server.py` — Local application server.
-- `assets/app.js` — Controller functionality.
-- `assets/output.js` — Scripture output functionality.
-- `assets/style.css` — Application styling.
-- `assets/fonts.css` — Font configuration.
-- `start.bat` — Application launcher.
-- `Open_Controller.bat` — Opens the controller.
-- `Open_Output_Test.bat` — Opens the output test page.
-- `setup_kjv.py` — KJV database setup.
-- `setup_fonts.py` — Font setup.
-- `validate_kjv.py` — Database validation.
-
-## **Important Notes**
-
-- Use the controller and OBS on the same Windows computer.
-- Do not close the local server while presenting.
-- Use the GO LIVE button to send the prepared passage to the OBS output.
-- The OBS output is designed to have a transparent background.
-
-## **Project Status**
+The repository structure and commit history have been inspected. The ZIP is present in the repository. The native plugin template and browser-based application have **not** been compiled or tested together, and no claim of a working native plugin integration is made.
