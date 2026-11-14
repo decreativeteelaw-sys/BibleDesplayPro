@@ -1,59 +1,93 @@
-# OBS Plugin Template
+# **Bible Display Pro**
 
-## Introduction
+An offline-first KJV Bible presentation tool designed for use with OBS Studio. It allows you to search, preview, style, and display Bible passages during live presentations.
 
-The plugin template is meant to be used as a starting point for OBS Studio plugin development. It includes:
+## **Important: GitHub Pages vs. Local Hosting**
 
-* Boilerplate plugin source code
-* A CMake project file
-* GitHub Actions workflows and repository actions
+Bible Display Pro uses a local Python server to communicate between the controller and the OBS display.
 
-## Supported Build Environments
+**GitHub Pages cannot run this application by itself.** GitHub Pages is designed for static websites. It cannot run the Python server or the local WebSocket communication required by Bible Display Pro.
 
-| Platform  | Tool   |
-|-----------|--------|
-| Windows   | Visual Studio 17 2022 |
-| macOS     | XCode 16.0 |
-| Windows, macOS  | CMake 3.30.5 |
-| Ubuntu 24.04 | CMake 3.28.3 |
-| Ubuntu 24.04 | `ninja-build` |
-| Ubuntu 24.04 | `pkg-config`
-| Ubuntu 24.04 | `build-essential` |
+GitHub is still useful for:
 
-## Quick Start
+- Storing and managing the project's source code.
+- Keeping backups and tracking changes.
+- Sharing the project with others.
+- Distributing downloadable releases.
 
-An absolute bare-bones [Quick Start Guide](https://github.com/obsproject/obs-plugintemplate/wiki/Quick-Start-Guide) is available in the wiki.
+The application should run locally on the Windows computer connected to OBS Studio.
 
-## Documentation
+## **Requirements**
 
-All documentation can be found in the [Plugin Template Wiki](https://github.com/obsproject/obs-plugintemplate/wiki).
+- Windows computer
+- Python installed
+- OBS Studio
+- Internet connection for the initial download of the KJV database and fonts
 
-Suggested reading to get up and running:
+After the required database and fonts have been downloaded, the application is designed to work offline.
 
-* [Getting started](https://github.com/obsproject/obs-plugintemplate/wiki/Getting-Started)
-* [Build system requirements](https://github.com/obsproject/obs-plugintemplate/wiki/Build-System-Requirements)
-* [Build system options](https://github.com/obsproject/obs-plugintemplate/wiki/CMake-Build-System-Options)
+## **Quick Start**
 
-## GitHub Actions & CI
+1. Download or extract the project folder.
+2. Open the extracted folder.
+3. Run `start.bat`.
+4. Allow the setup process to complete.
+5. Open the controller using the provided launcher.
 
-Default GitHub Actions workflows are available for the following repository actions:
+The local application addresses are:
 
-* `push`: Run for commits or tags pushed to `master` or `main` branches.
-* `pr-pull`: Run when a Pull Request has been pushed or synchronized.
-* `dispatch`: Run when triggered by the workflow dispatch in GitHub's user interface.
-* `build-project`: Builds the actual project and is triggered by other workflows.
-* `check-format`: Checks CMake and plugin source code formatting and is triggered by other workflows.
+**Controller:**\
+`http://127.0.0.1:8765/index.html`
 
-The workflows make use of GitHub repository actions (contained in `.github/actions`) and build scripts (contained in `.github/scripts`) which are not needed for local development, but might need to be adjusted if additional/different steps are required to build the plugin.
+**OBS Browser Source:**\
+`http://127.0.0.1:8765/output.html`
 
-### Retrieving build artifacts
+Keep the local server running while using the application.
 
-Successful builds on GitHub Actions will produce build artifacts that can be downloaded for testing. These artifacts are commonly simple archives and will not contain package installers or installation programs.
+## **Features**
 
-### Building a Release
+- KJV Bible search.
+- Search by book, chapter, verse, or keyword.
+- Previous and next verse navigation.
+- Display individual verses or verse ranges.
+- Preview passages before displaying them.
+- GO LIVE control positioned beside the passage search area.
+- Transparent Bible output for OBS.
+- Customizable text appearance and positioning.
+- Saved presentation styles and presets.
+- Local Bible database storage.
 
-To create a release, an appropriately named tag needs to be pushed to the `main`/`master` branch using semantic versioning (e.g., `12.3.4`, `23.4.5-beta2`). A draft release will be created on the associated repository with generated installer packages or installation programs attached as release artifacts.
+## **First-Time Setup**
 
-## Signing and Notarizing on macOS
+The ZIP package contains setup scripts but does not include the complete KJV database or downloaded font files.
 
-Basic concepts of codesigning and notarization on macOS are explained in the correspodning [Wiki article](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS) which has a specific section for the [GitHub Actions setup](https://github.com/obsproject/obs-plugintemplate/wiki/Codesigning-On-macOS#setting-up-code-signing-for-github-actions).
+The setup scripts are provided to obtain the required resources during the initial setup.
+
+If the Bible database is missing or damaged, run:
+
+`Repair_KJV_Database.bat`
+
+## **Project Structure**
+
+- `index.html` — Main controller interface.
+- `output.html` — OBS display page.
+- `server.py` — Local application server.
+- `assets/app.js` — Controller functionality.
+- `assets/output.js` — Scripture output functionality.
+- `assets/style.css` — Application styling.
+- `assets/fonts.css` — Font configuration.
+- `start.bat` — Application launcher.
+- `Open_Controller.bat` — Opens the controller.
+- `Open_Output_Test.bat` — Opens the output test page.
+- `setup_kjv.py` — KJV database setup.
+- `setup_fonts.py` — Font setup.
+- `validate_kjv.py` — Database validation.
+
+## **Important Notes**
+
+- Use the controller and OBS on the same Windows computer.
+- Do not close the local server while presenting.
+- Use the GO LIVE button to send the prepared passage to the OBS output.
+- The OBS output is designed to have a transparent background.
+
+## **Project Status**
